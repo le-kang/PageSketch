@@ -3,11 +3,20 @@
  * Created: Aug 9, 2016
  */
 
+drop table followings;
+drop table stars;
+drop table page_versions;
+drop table pages;
+drop table users;
+
 -- Table for user details
 create table users (
     username varchar(30) not null primary key,
-    password varchar(30) not null,
+    password varchar(255) not null,
+    full_name varchar(255) not null,
     email varchar(255) not null,
+    group_name varchar(10) default 'Users' not null,
+    bio varchar(255),
     created_at timestamp not null
 );
 
@@ -18,7 +27,7 @@ create table pages (
     current_version int not null,
     created_by varchar(30) references users(username),
     published boolean not null
-)
+);
 
 -- Table for page versions
 create table page_versions (
@@ -26,18 +35,18 @@ create table page_versions (
     version int not null,
     code varchar(32672) not null,
     created_at timestamp not null
-)
+);
 
 -- Table for stared pages by user
 create table stars (
     username varchar(30) not null references users(username),
     page_id varchar(36) not null references pages(id),
     primary key (username, page_id)
-)
+);
 
 -- Table for users' following activity
 create table followings (
     username varchar(30) not null references users(username),
     followed_user varchar(30) not null references users(username),
     primary key (username, followed_user)
-)
+);

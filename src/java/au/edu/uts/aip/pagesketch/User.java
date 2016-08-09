@@ -1,28 +1,24 @@
 package au.edu.uts.aip.pagesketch;
 
+import java.io.Serializable;
+import java.util.Date;
+import javax.validation.constraints.*;
+
 /**
  *
  * @author Le Kang
  */
-public class User {
+public class User implements Serializable {
+    @Size(min=1, max=30, message="Username is mandatory and cannot contain more than 30 characters.")
     private String username;
+    @Size(min=8, max=20, message="Password is mandatory and the length must be between 8 and 20 characters.")
     private String password;
+    @Size(min=1, message="Full name is mandatory")
+    private String fullName;
+    @Pattern(regexp="[a-zA-Z0-9]+@[a-zA-Z0-9]+\\.[a-zA-Z0-9]+", message="Email is empty or valid")
     private String email;
-    private String group;
-
-    /**
-     * 
-     * @param username
-     * @param password
-     * @param email
-     * @param group 
-     */
-    public User(String username, String password, String email, String group) {
-        this.username = username;
-        this.password = password;
-        this.email = email;
-        this.group = group;
-    }
+    private String bio;
+    private Date createdAt;
 
     /**
      * 
@@ -60,6 +56,22 @@ public class User {
      * 
      * @return 
      */
+    public String getFullName() {
+        return fullName;
+    }
+
+    /**
+     * 
+     * @param fullName 
+     */
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    /**
+     * 
+     * @return 
+     */
     public String getEmail() {
         return email;
     }
@@ -76,15 +88,32 @@ public class User {
      * 
      * @return 
      */
-    public String getGroup() {
-        return group;
+    public String getBio() {
+        return bio;
     }
 
     /**
      * 
-     * @param group 
+     * @param bio 
      */
-    public void setGroup(String group) {
-        this.group = group;
+    public void setBio(String bio) {
+        this.bio = bio;
     }
+
+    /**
+     * 
+     * @return 
+     */
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    /**
+     * 
+     * @param createdAt 
+     */
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+    
 }
