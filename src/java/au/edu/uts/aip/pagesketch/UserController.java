@@ -80,7 +80,7 @@ public class UserController implements Serializable {
             UserDAO userDAO = new UserDAO();
             user = userDAO.find(username);
         } catch (ServletException ex) {
-            context.addMessage(null, new FacesMessage(ex.getMessage()));
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Invalid user name or password", ""));
             return null;
         } catch (NamingException ex) {
             Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
@@ -108,18 +108,26 @@ public class UserController implements Serializable {
     
     /**
      * 
+     * @return 
      */
     public String register() {
+        FacesContext context = FacesContext.getCurrentInstance();
         try {
             UserDAO userDAO = new UserDAO();
-            user.setCreatedAt(new Date());
-            userDAO.create(user);
-        } catch (NamingException ex) {
+            if (null == userDAO.find(user.getUsername())) {
+                user.setCreatedAt(new Date());
+                userDAO.create(user);
+                context.addMessage(null, new FacesMessage("User \"" + user.getUsername() + "\" registered successfully, please login"));
+                context.getExternalContext().getFlash().setKeepMessages(true);
+                user = new User();
+            } else {
+                context.addMessage(null, new FacesMessage("Username \"" + user.getUsername() + "\" already existed"));
+                return null;
+            }
+        } catch (NamingException | NoSuchAlgorithmException | SQLException ex) {
             Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NoSuchAlgorithmException ex) {
-            Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
+            context.addMessage(null, new FacesMessage(ex.getMessage()));
+            return null;
         }
         return "login?faces-redirect=true";
     }

@@ -10,7 +10,7 @@ import javax.sql.DataSource;
  *
  * @author Le Kang
  */
-public class DAO {
+public abstract class DAO {
     protected final DataSource ds;
     
     public DAO() throws NamingException {

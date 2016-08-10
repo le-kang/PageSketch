@@ -1,0 +1,59 @@
+/* 
+    Created on : Aug 10, 2016, 12:00:23 PM
+    Author     : Le Kang
+*/
+
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900italic,900);
+
+html, body {
+    font-family: "Roboto", Georgia, "Times New Roman", Times, serif !important;
+    font-size: 14px;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAzCAMAAAANf8AYAAAAFVBMVEXs7Ozv7+/p6ent7e3r6+vu7u7q6uoJkgNWAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2NJREFUSEuVlktyZDEQAhMKuP+RZ/Fsz8cT7uilNpKCgqTYNk5jJ90i6xpmVSlRQrkUdkS+w4fp9SZRssWSrds5W4XDjYtv+Ho0cXsqyRzvcnQxW1r1KsdSduplA5vTZck5GfPdVk93h+qek7M8y95JoOEcRcdR+67J1quOnuIcyZnFE4Nu3GVHqp3uaupBFMm+0iskWiSOVepkpdO8XGUFSfHtjk44KjF3BGzHQu3k07kVuWXC7NAx+WxDpalkHMUpcYvm3pw6k0+yNSdRDMpcVHQ9RUFIYfN0twsOccJNqOVyrVkuvTvlLuG4Y3e+xwmU4KxUp20SqGh3a+fTDrQq1tbldJOc7c//4Ksda2l2CWGtlKWTaK6dynxXsaN2AhHBi+JKPmMkYTQtA3Yf4n2Z1eactut8PQv1sp5jc9t8lS/j2tU+LecGQ+6yIm5yojLcpVwVl8Vj4bzg2gOdYicG1S6HzYK5prRq4lmsh5LUHoGbxCXczgq28QqKbzISHHaOikuqUl/uEHmun5oeVu2kdW4hF6QNJym2gZCNW5UrBYl1lMgm9oVmqZSs1Tjnap0rZGHsdhfuKlla7W7HcstiiS70Ki4qpxymk31z5VHNc71LbJnZqq5WbyY5lW1rIW1cmmbIjyHvdu3OC63ET6LKYtVYu00+UkqrqLf0UK63qbcGLq7WxGU2F4QSTuLIKMQi589BaLeuuuZKN8utj2ucanLmm9cj5lIhTtc5gSOHvC4I5t0ZnaskykxR1UfGeBy5IoHHP4y8NPRmT3RV7U1Ex9Cp8De9i4zZfJtZoyX4RoaPSgnkpPfAyPtENG/mTQ7EXCVOIlXW83y6u+Ctv32mxOLGLDyttrNHm2g65WlBTkiS4Go1ZoLdgyK5bl2I7mIZHZwuttST2sGrItRJZKBrGQ58BmmzcIamWpfcnGsrLtS7jIsEWyauna/RhTmaL561DZ97Ix0Snn8mzJ56dStD68QMfS4LSrJoyrGdL1lyR3HHR3tVNxyiWzwU0UnWLbmp86HqTp5s6a4rfX+o2BOJmsat4/kkI7clypE+x6PqwUTOWWA5H37dlhgPr0VhylJAMURo3ejq+3IZe/8hXuxD/8s63wjecVljgKsupqnPUUALuiuNu8vJqGS3nXN4l+8D/AXC9B1nAJuKRQAAAABJRU5ErkJggg==') #F6f6F6;
+}
+
+.container {
+    margin-right: auto;
+    margin-left: auto;
+    width: 100%;
+}
+
+@media (min-width: 1220px) {
+    .container {
+        width: 1200px;
+    }    
+}
+
+@media (min-width: 992px) {
+    .container {
+        width: 970px;
+    }    
+}
+
+@media (min-width: 768px) {
+    .container {
+        width: 750px;
+    }    
+}
+
+.center {
+    position: absolute; 
+    padding: 15px;
+    top: 40%; 
+    left: 50%; 
+    transform: translate(-50%, -50%);
+    width: 600px;
+    background: #FFFFFF;
+    box-shadow: 0 3px 5px -1px rgba(0,0,0,.2),0 5px 8px 0 rgba(0,0,0,.14),0 1px 14px 0 rgba(0,0,0,.12);
+    border-radius: 10px;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-right {
+    text-align: right;
+}

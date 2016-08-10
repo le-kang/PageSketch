@@ -9,13 +9,13 @@ import javax.validation.constraints.*;
  * @author Le Kang
  */
 public class User implements Serializable {
-    @Size(min=1, max=30, message="Username is mandatory and cannot contain more than 30 characters.")
+    @Size(min=1, max=30, message="Username is mandatory and no more than 30 characters.")
     private String username;
-    @Size(min=8, max=20, message="Password is mandatory and the length must be between 8 and 20 characters.")
+    @Size(min=8, max=20, message="Password is mandatory and between 8 and 20 characters.")
     private String password;
     @Size(min=1, message="Full name is mandatory")
     private String fullName;
-    @Pattern(regexp="[a-zA-Z0-9]+@[a-zA-Z0-9]+\\.[a-zA-Z0-9]+", message="Email is empty or valid")
+    @Pattern(regexp="^(.+)@(.+)$", message="Email is empty or invalid")
     private String email;
     private String bio;
     private Date createdAt;

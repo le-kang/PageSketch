@@ -1,47 +1,48 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<html xmlns="http://www.w3.org/1999/xhtml"  
+      xmlns:h="http://java.sun.com/jsf/html"  
+      xmlns:f="http://java.sun.com/jsf/core"  
+      xmlns:p="http://primefaces.org/ui">  
     <h:head>
         <title>Page Sketch</title>
+        <link rel="stylesheet" type="text/css" href="style/style.css"/>
     </h:head>
     <h:body>
-        <h1>Register</h1>
-        <h:form>
-            <p>
-                <label>Username:
-                    <h:inputText id="username" value="#{userController.user.username}"/>
-                    <h:message for="username"/>
-                </label>
-            </p>
-            <p>
-                <label>Password:
-                    <h:inputSecret id="password" value="#{userController.user.password}"/>
-                    <h:message for="password"/>
-                </label>
-            </p>
-            <p>
-                <label>Full name:
-                    <h:inputText id="full-name" value="#{userController.user.fullName}"/>
-                    <h:message for="full-name"/>
-                </label>
-            </p>
-            <p>
-                <label>Email
-                    <h:inputText id="email" value="#{userController.user.email}"/>
-                    <h:message for="email"/>
-                </label>
-            </p>
-            <p>
-                <label>Bio
-                    <h:inputTextarea id="bio" value="#{userController.user.bio}"/>
-                    <h:message for="bio"/>
-                </label>
-            </p>
-            <p>
-                <h:commandButton value="Register" action="#{userController.register}"/>
-            </p>
-        </h:form>
+        <div class="center">
+            <div class="text-center">
+                <h1>Page Sketch</h1>
+                <p>Test and share your HTML, CSS and JavaScript online</p>
+            </div>
+            <h:form>
+                <p:panel header="Register">
+                    <p:messages autoUpdate="true" closable="true"/>
+                    <div class="ui-fluid">
+                        <p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-8" layout="grid" styleClass="ui-panelgrid-blank">
+                            <p:outputLabel for="username" value="Username:"/>
+                            <p:inputText id="username" value="#{userController.user.username}" label="Username"/>
+
+                            <p:outputLabel for="password" value="Password:"/>
+                            <p:password id="password" value="#{userController.user.password}" label="Password"/>
+                            
+                            <p:outputLabel for="full-name" value="Full name:"/>
+                            <p:inputText id="full-name" value="#{userController.user.fullName}" label="Full name"/>
+
+                            <p:outputLabel for="email" value="Email:"/>
+                            <p:inputText id="email" value="#{userController.user.email}" label="Email"/>
+
+                            <p:outputLabel for="bio" value="Bio"/>
+                            <p:inputTextarea id="bio" value="#{userController.user.bio}" label="Bio"/>
+                        </p:panelGrid>
+                    </div>
+                    <p:separator/>
+                    <div class="text-right">
+                        <p:link value="Cancel" outcome="login"/>
+                        <p:spacer width="10"/>
+                        <p:commandButton ajax="false" value="Register" action="#{userController.register}"/>
+                    </div>
+                </p:panel>
+            </h:form>
+        </div>
     </h:body>
 </html>

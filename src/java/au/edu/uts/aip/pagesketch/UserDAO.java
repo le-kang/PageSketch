@@ -21,6 +21,12 @@ public class UserDAO extends DAO{
         super();
     }
     
+    /**
+     * 
+     * @param user
+     * @throws NoSuchAlgorithmException
+     * @throws SQLException 
+     */
     public void create(User user) throws NoSuchAlgorithmException, SQLException {
         String query = "INSERT INTO USERS"
                 + "(USERNAME, PASSWORD, FULL_NAME, EMAIL, BIO, CREATED_AT) VALUES"
@@ -39,6 +45,11 @@ public class UserDAO extends DAO{
         }      
     }
     
+    /**
+     * 
+     * @param username
+     * @return 
+     */
     public User find(String username) {
         String query = "SELECT * FROM USERS WHERE USERNAME = ?";
         try (Connection conn = this.ds.getConnection();
@@ -60,6 +71,10 @@ public class UserDAO extends DAO{
         return null;
     }
     
+    /**
+     * 
+     * @return 
+     */
     public ArrayList<String> findAll() {
         ArrayList<String> usernames = new ArrayList();
         String query = "SELECT * FROM USERS";
