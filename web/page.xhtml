@@ -1,0 +1,105 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"  
+      xmlns:h="http://java.sun.com/jsf/html"  
+      xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets" 
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions"> 
+    <f:metadata>
+        <f:viewParam name="id" value="#{pageController.id}"/>
+        <f:viewParam name="version" value="#{pageController.version}"/>
+        <f:viewAction action="#{pageController.loadPage}"/>
+        <f:viewAction action="#{pageController.setAuthor(userController.user.username)}" if="#{pageController.id == null}"/>
+    </f:metadata>
+    <h:head>
+        <title>Page Sketch</title>
+        <link rel="stylesheet" type="text/css" href="style/style.css"/>
+    </h:head>
+    <h:body>
+        <ui:include src="/WEB-INF/header.xhtml"/>
+        <div class="main">
+            <pe:layout fullPage="false" id="editor">  
+                <h:form>
+                    <pe:layoutPane position="west" resizable="false" size="270">  
+                        <pe:layoutPane position="center">  
+                            <f:facet name="header">  
+                                <h:outputText value="Overview"/>  
+                            </f:facet>  
+                            <p:panelGrid columns="1" layout="grid" styleClass="ui-panelgrid-blank">
+                                <p:messages autoUpdate="true" closable="true"/>
+                                <p:outputLabel value="Name: *" for="name" style="text-decoration: underline;"/>
+                                <p:inputText id="name" value="#{pageController.page.name}" label="Name"/>
+                                <p:outputLabel value="Decription:" for="description" style="text-decoration: underline;"/>
+                                <p:inputTextarea id="description" value="#{pageController.page.description}" 
+                                                 label="Description" rows="5" cols="30" counter="display" 
+                                                 maxlength="255" counterTemplate="{0} characters remaining."/>
+                                <p:outputLabel id="display" style="font-size: 12px; color: #999; font-style: italic"/>
+                                <h:outputText value="Publish to share?" style="text-decoration: underline;"/>
+                                <p:selectOneButton value="#{pageController.page.published}">
+                                    <f:selectItem itemLabel="Yes" itemValue="true" />
+                                    <f:selectItem itemLabel="No" itemValue="false" />
+                                </p:selectOneButton>
+                                <h:inputHidden value="#{pageController.page.id}"/>
+                                <h:inputHidden value="#{pageController.page.author}"/>
+                                <h:inputHidden value="#{pageController.page.currentVersion}"/>
+                                <h:inputHidden value="#{pageController.pageVersion.version}"/>
+                                <h:inputHidden value="#{pageController.pageVersion.code}"/>
+                            </p:panelGrid>  
+                        </pe:layoutPane>  
+                        <pe:layoutPane position="south" size="50%" resizable="false" 
+                                       rendered="#{pageController.page.versions.size() > 0 and pageController.page.author.equals(userController.user.username)}">  
+                            <f:facet name="header">  
+                                <h:outputText value="Versions"/>  
+                            </f:facet>  
+                            <p:dataList value="#{pageController.page.versions}" var="version" type="unordered" itemType="none">
+                                <p:link outcome="page" title="View" styleClass="ui-icon ui-icon-search" style="float:left;margin-right:10px" 
+                                        rendered="#{version.version != pageController.version}">
+                                    <f:param name="id" value="#{version.id}"/>
+                                    <f:param name="version" value="#{version.version}"/>
+                                </p:link>
+                                <p:link disabled="true" styleClass="ui-icon ui-icon-check" style="float:left;margin-right:10px" 
+                                        rendered="#{version.version == pageController.version}"/>
+                                <h:outputText value="Version #{version.version}"/>
+                            </p:dataList>
+                        </pe:layoutPane>  
+                    </pe:layoutPane>  
+                    <pe:layoutPane position="center" resizable="false"> 
+                        <f:facet name="header">  
+                            <h:outputText value="Code"/>  
+                        </f:facet> 
+                        <pe:codeMirror id="codeMirror" mode="htmlmixed" tabSize="2" widgetVar="pageEditor" 
+                                       value="#{pageController.code}" lineNumbers="true" lineWrapping="true"/>  
+                        <div class="editor-options ui-g">
+                            <div class="ui-g-6">
+                                <p:commandButton value="Run" icon="fa fa-caret-square-o-right" type="button" onclick="runScript();"/>
+                            </div>
+                            <div class="ui-g-6 text-right">
+                                <p:button value="Quit" icon="fa fa-sign-out" outcome="index"/>
+                                <p:commandButton ajax="false" value="Save" action="#{pageController.createOrUpdate}" icon="fa fa-save"/>
+                            </div>
+                        </div>
+                    </pe:layoutPane>  
+                    <pe:layoutPane position="east" resizable="false" size="45%"> 
+                        <f:facet name="header">  
+                            <h:outputText value="Result"/>  
+                        </f:facet> 
+                        <iframe frameborder="0" width="100%" height="100%"></iframe>
+                    </pe:layoutPane>
+                </h:form>
+            </pe:layout>  
+        </div>
+        <ui:include src="/WEB-INF/footer.xhtml"/>
+        <script>
+            function runScript() {
+                $('iframe').contents().get(0).open();
+                $('iframe').contents().get(0).write(PF('pageEditor').instance.getValue());
+                $('iframe').contents().get(0).close();
+            }
+            $(document).ready(function () {
+                runScript();
+            });
+        </script>
+    </h:body>
+</html>
+

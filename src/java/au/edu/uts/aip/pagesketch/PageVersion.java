@@ -14,21 +14,7 @@ public class PageVersion {
     private int version;
     private String code;
     private Date createdAt;
-
-    /**
-     * 
-     * @param id the id of the page
-     * @param version the version of the page
-     * @param code the HTML code of the page
-     * @param createdAt the created time of the page
-     */
-    public PageVersion(String id, int version, String code, Date createdAt) {
-        this.id = id;
-        this.version = version;
-        this.code = code;
-        this.createdAt = createdAt;
-    }
-
+    
     /**
      * 
      * @return 

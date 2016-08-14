@@ -28,6 +28,8 @@ public abstract class DAO {
                 ps.setTimestamp(index, new Timestamp(((Date) arg).getTime()));
             } else if (arg instanceof Integer) {
                 ps.setInt(index, (Integer) arg);
+            } else if (arg instanceof Boolean) {
+                ps.setBoolean(index, (boolean) arg);
             } else {
                 ps.setString(index, (String) arg);
             }

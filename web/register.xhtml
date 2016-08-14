@@ -18,17 +18,17 @@
                 <p:panel header="Register">
                     <p:messages autoUpdate="true" closable="true"/>
                     <div class="ui-fluid">
-                        <p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-8" layout="grid" styleClass="ui-panelgrid-blank">
-                            <p:outputLabel for="username" value="Username:"/>
-                            <p:inputText id="username" value="#{userController.user.username}" label="Username"/>
+                        <p:panelGrid columns="2" columnClasses="ui-grid-col-3,ui-grid-col-9" layout="grid" styleClass="ui-panelgrid-blank">
+                            <p:outputLabel for="username" value="Username: *"/>
+                            <p:inputText id="username" value="#{userController.user.username}" label="Username" placeholder="No more than 30 characters"/>
 
-                            <p:outputLabel for="password" value="Password:"/>
-                            <p:password id="password" value="#{userController.user.password}" label="Password"/>
+                            <p:outputLabel for="password" value="Password: *"/>
+                            <p:password id="password" value="#{userController.user.password}" label="Password" placeholder="Between 8 and 20 characters"/>
                             
-                            <p:outputLabel for="full-name" value="Full name:"/>
-                            <p:inputText id="full-name" value="#{userController.user.fullName}" label="Full name"/>
+                            <p:outputLabel for="full-name" value="Full name: *"/>
+                            <p:inputText id="full-name" value="#{userController.user.fullName}" label="Full name" placeholder="First Last"/>
 
-                            <p:outputLabel for="email" value="Email:"/>
+                            <p:outputLabel for="email" value="Email: *"/>
                             <p:inputText id="email" value="#{userController.user.email}" label="Email"/>
 
                             <p:outputLabel for="bio" value="Bio"/>

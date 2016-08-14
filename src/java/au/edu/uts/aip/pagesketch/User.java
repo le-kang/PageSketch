@@ -8,7 +8,7 @@ import javax.validation.constraints.*;
  *
  * @author Le Kang
  */
-public class User implements Serializable {
+public class User {
     @Size(min=1, max=30, message="Username is mandatory and no more than 30 characters.")
     private String username;
     @Size(min=8, max=20, message="Password is mandatory and between 8 and 20 characters.")

@@ -2,8 +2,6 @@ package au.edu.uts.aip.pagesketch;
 
 import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
-import java.sql.SQLException;
-import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.enterprise.context.*;
@@ -80,7 +78,8 @@ public class UserController implements Serializable {
             UserDAO userDAO = new UserDAO();
             user = userDAO.find(username);
         } catch (ServletException ex) {
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Invalid user name or password", ""));
+            String message = ex.getMessage() + ": Invalid user name or password";
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, message, null));
             return null;
         } catch (NamingException ex) {
             Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
@@ -99,6 +98,9 @@ public class UserController implements Serializable {
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
         try {
             request.logout();
+            username = null;
+            password = null;
+            user = new User();
         } catch (ServletException ex) {
             context.addMessage(null, new FacesMessage(ex.getMessage()));
             return null;
@@ -112,19 +114,21 @@ public class UserController implements Serializable {
      */
     public String register() {
         FacesContext context = FacesContext.getCurrentInstance();
+        String message;
         try {
             UserDAO userDAO = new UserDAO();
             if (null == userDAO.find(user.getUsername())) {
-                user.setCreatedAt(new Date());
                 userDAO.create(user);
-                context.addMessage(null, new FacesMessage("User \"" + user.getUsername() + "\" registered successfully, please login"));
+                message = "User \"" + user.getUsername() + "\" registered successfully, please login";
+                context.addMessage(null, new FacesMessage(message));
                 context.getExternalContext().getFlash().setKeepMessages(true);
                 user = new User();
             } else {
-                context.addMessage(null, new FacesMessage("Username \"" + user.getUsername() + "\" already existed"));
+                message = "Username \"" + user.getUsername() + "\" already existed";
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, message, null));
                 return null;
             }
-        } catch (NamingException | NoSuchAlgorithmException | SQLException ex) {
+        } catch (NamingException | NoSuchAlgorithmException ex) {
             Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
             context.addMessage(null, new FacesMessage(ex.getMessage()));
             return null;

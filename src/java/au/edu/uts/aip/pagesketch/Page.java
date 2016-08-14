@@ -1,5 +1,8 @@
 package au.edu.uts.aip.pagesketch;
 
+import java.util.ArrayList;
+import javax.validation.constraints.Size;
+
 /**
  * A class that stores basic information of a web page created by user
  * 
@@ -7,27 +10,14 @@ package au.edu.uts.aip.pagesketch;
  */
 public class Page {
     private String id;
+    @Size(min=1, message="Page name is mandatory")
     private String name;
+    @Size(max=255, message="Page description cannot be more than 255 characters.")
+    private String description;
     private int currentVersion;
-    private String createdBy;
-    private boolean published;
-
-    /**
-     * Constructor to create new page
-     * 
-     * @param id the id of the page
-     * @param name the name of the page
-     * @param currentVersion the current version of the page
-     * @param createdBy the user name who creates the page
-     * @param published the flag shows whether the page is published for share
-     */
-    public Page(String id, String name, int currentVersion, String createdBy, boolean published) {
-        this.id = id;
-        this.name = name;
-        this.currentVersion = currentVersion;
-        this.createdBy = createdBy;
-        this.published = published;
-    }
+    private String author;
+    private boolean published = false;
+    private ArrayList<PageVersion> versions = new ArrayList();
 
     /**
      * Get the id of the page. 
@@ -70,6 +60,22 @@ public class Page {
     }
 
     /**
+     * 
+     * @return 
+     */
+    public String getDescription() {
+        return description;
+    }
+
+    /**
+     * 
+     * @param description 
+     */
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    /**
      * Get the current version of the page
      * 
      * @return the current version of the page
@@ -97,17 +103,17 @@ public class Page {
      * 
      * @return 
      */
-    public String getCreatedBy() {
-        return createdBy;
+    public String getAuthor() {
+        return author;
     }
 
     /**
      * Set the user who created this page
      * 
-     * @param createdBy 
+     * @param author 
      */
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
     /**
@@ -126,5 +132,33 @@ public class Page {
      */
     public void setPublished(boolean published) {
         this.published = published;
+    }
+
+    /**
+     * 
+     * @return 
+     */
+    public ArrayList<PageVersion> getVersions() {
+        return versions;
+    }
+
+    /**
+     * 
+     * @param versions 
+     */
+    public void setVersions(ArrayList<PageVersion> versions) {
+        this.versions = versions;
+    }
+    
+    /**
+     * 
+     * @return 
+     */
+    public PageVersion getCurrentPageVersion() {
+        return versions.get(0);
+    }
+    
+    public PageVersion getPageVersion(int version) {
+        return versions.get(versions.size() - version);
     }
 }

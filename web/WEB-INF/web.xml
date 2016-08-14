@@ -7,7 +7,11 @@
     <context-param>  
         <param-name>primefaces.THEME</param-name>  
         <param-value>omega</param-value>  
-    </context-param>  
+    </context-param> 
+    <context-param>
+        <param-name>primefaces.FONT_AWESOME</param-name>
+        <param-value>true</param-value>
+    </context-param> 
     <servlet>
         <servlet-name>Faces Servlet</servlet-name>
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
@@ -38,6 +42,7 @@
         <web-resource-collection>
             <web-resource-name>secure</web-resource-name>
             <url-pattern>/faces/index.xhtml</url-pattern>
+            <url-pattern>/faces/page.xhtml</url-pattern>
         </web-resource-collection>
         <auth-constraint>
             <role-name>Users</role-name>
