@@ -42,7 +42,8 @@
         <web-resource-collection>
             <web-resource-name>secure</web-resource-name>
             <url-pattern>/faces/index.xhtml</url-pattern>
-            <url-pattern>/faces/page.xhtml</url-pattern>
+            <url-pattern>/faces/editpage.xhtml</url-pattern>
+            <url-pattern>/faces/viewpage.xhtml</url-pattern>
         </web-resource-collection>
         <auth-constraint>
             <role-name>Users</role-name>

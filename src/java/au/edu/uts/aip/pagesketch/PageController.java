@@ -1,7 +1,8 @@
 package au.edu.uts.aip.pagesketch;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,6 +24,7 @@ public class PageController implements Serializable {
     private Page page = new Page();
     private PageVersion pageVersion = new PageVersion();
     private String code;
+    private String user;
 
     public String getId() {
         return id;
@@ -55,12 +57,41 @@ public class PageController implements Serializable {
     public void setCode(String code) {
         this.code = code;
     }
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
+    }
     
-    public void loadPage() {
+    public String loadPage(String username, String mode) {
+        user = username;
+        FacesContext context = FacesContext.getCurrentInstance();
+        String message;
         if (null != id) {
             try {
                 PageDAO pageDAO = new PageDAO();
                 page = pageDAO.find(id);
+                if (null == page) {
+                    message = "Page(" + id + ")is not found";
+                    context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, message, null));
+                    context.getExternalContext().getFlash().setKeepMessages(true);
+                    return "index?faces-redirect=true";
+                } 
+                if (mode.equals("edit") && !page.getAuthor().equals(username)) {
+                    message = "You do not have the access to edit page(" + id + ")";
+                    context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, message, null));
+                    context.getExternalContext().getFlash().setKeepMessages(true);
+                    return "index?faces-redirect=true";
+                }
+                if (mode.equals("view") && !page.getAuthor().equals(username) && !page.getPublished()) {
+                    message = "You do not have the access to view page(" + id + ") as the author doesn't allow for share";
+                    context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, message, null));
+                    context.getExternalContext().getFlash().setKeepMessages(true);
+                    return "index?faces-redirect=true";
+                }
                 pageVersion = page.getCurrentPageVersion();
                 if (version > page.getCurrentVersion() || version < 1) {
                     version = page.getCurrentVersion();
@@ -68,16 +99,65 @@ public class PageController implements Serializable {
                 code = page.getPageVersion(version).getCode();
             } catch (NamingException ex) {
                 Logger.getLogger(PageController.class.getName()).log(Level.SEVERE, null, ex);
+                return "index?faces-redirect=true";
             }
+        } else {
+            if (mode.equals("view")) {
+                return "index?faces-redirect=true";
+            }
+            page.setAuthor(username);
+        }
+        return null;
+    }
+    
+    public String getStarsInfo() {
+        int numOfStars = page.getStars().size();
+        switch (numOfStars) {
+            case 0:
+                return "";
+            case 1:
+                return "<i class=\"fa fa-star\"></i>&nbsp;"
+                        + "<i>" + page.getStars().get(0).getUsername() + "</i> ";
+            case 2:
+                return "<i class=\"fa fa-star\"></i>&nbsp;"
+                        + "<i>" + page.getStars().get(0).getUsername() + "</i> and "
+                        + "<i>" + page.getStars().get(1).getUsername() + "</i> ";
+            default:
+                return "<i class=\"fa fa-star\"></i>&nbsp;"
+                        + "<i>" + page.getStars().get(0).getUsername() + "</i>, "
+                        + "<i>" + page.getStars().get(1).getUsername() + "</i> "
+                        + "and " + Integer.toString(numOfStars - 2) + "more...";
         }
     }
     
-    public void setAuthor(String username) {
-        page.setAuthor(username);
+    public String getStarButtonLabel() {
+        return isUserStarred() ? "Unstar": "Star";
+    }
+    
+    public String convertCodeToBase64DataURL() {
+        return "data:text/html;charset=utf-8;base64," + 
+                Base64.getEncoder().encodeToString(code.getBytes(StandardCharsets.UTF_8));
     }
     
     public String createOrUpdate() {
         return id == null ? create() : update();
+    }
+    
+    public String starOrUnstar() {
+        try {
+            PageDAO pageDAO = new PageDAO();
+            page = pageDAO.find(id);
+            Star star = new Star(user, id);
+            if (isUserStarred()) {
+                pageDAO.removeStar(star);
+            } else {
+                pageDAO.createStar(star);
+            }
+        } catch (NamingException ex) {
+            Logger.getLogger(PageController.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+        return "viewpage?faces-redirect=true&includeViewParams=true"; 
     }
     
     private String create() {
@@ -104,7 +184,7 @@ public class PageController implements Serializable {
             context.addMessage(null, new FacesMessage(ex.getMessage()));
             return null;
         }
-        return "page?faces-redirect=true&includeViewParams=true";
+        return "editpage?faces-redirect=true&includeViewParams=true";
     }
     
     /**
@@ -138,7 +218,15 @@ public class PageController implements Serializable {
             context.addMessage(null, new FacesMessage(ex.getMessage()));
             return null;
         }
-        return "page?faces-redirect=true&includeViewParams=true";
+        return "editpage?faces-redirect=true&includeViewParams=true";
     }
     
+    private boolean isUserStarred() {
+        for (Star star: page.getStars()) {
+            if (star.getUsername().equals(user)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

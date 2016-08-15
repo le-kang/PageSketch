@@ -42,5 +42,6 @@ create table page_versions (
 create table stars (
     username varchar(30) not null references users(username),
     page_id varchar(36) not null references pages(id),
+    created_at timestamp default current_timestamp not null,
     primary key (username, page_id)
 );

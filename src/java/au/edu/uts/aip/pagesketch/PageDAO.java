@@ -79,7 +79,8 @@ public class PageDAO extends DAO {
                 page.setCurrentVersion(rs.getInt("current_version"));
                 page.setAuthor(rs.getString("author"));
                 page.setPublished(rs.getBoolean("published"));
-                page.setVersions(findAllPageVersions(id));
+                page.setVersions(findPageVersions(id));
+                page.setStars(findStars(id));
                 return page;
             }
         } catch (SQLException ex) {
@@ -105,7 +106,7 @@ public class PageDAO extends DAO {
     public boolean found(String id, String name, String author) {
         String query = "SELECT * FROM PAGES WHERE PAGE_NAME = ? AND AUTHOR = ? AND ID != ?";
         try (Connection conn = this.ds.getConnection();
-             PreparedStatement ps = createPreparedStatement(conn, query, id, name, author);
+             PreparedStatement ps = createPreparedStatement(conn, query, name, author, id);
              ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
                 return true;
@@ -116,7 +117,7 @@ public class PageDAO extends DAO {
         return false;
     }
     
-    public ArrayList<PageVersion> findAllPageVersions(String id) {
+    public ArrayList<PageVersion> findPageVersions(String id) {
         ArrayList<PageVersion> versions = new ArrayList();
         String query = "SELECT * FROM PAGE_VERSIONS WHERE ID = ? ORDER BY VERSION DESC";
         try (Connection conn = this.ds.getConnection();
@@ -136,11 +137,51 @@ public class PageDAO extends DAO {
         return versions;
     }
     
-    public ArrayList<Page> findAllPages(String username) {
-        ArrayList<Page> pages = new ArrayList();
-        String query = "SELECT * FROM PAGES WHERE CREATED_BY = ?";
+    public ArrayList<Star> findStars(String pageId) {
+        ArrayList<Star> stars = new ArrayList();
+        String query = "SELECT * FROM STARS WHERE PAGE_ID = ?";
         try (Connection conn = this.ds.getConnection();
-             PreparedStatement ps = createPreparedStatement(conn, query, username);
+             PreparedStatement ps = createPreparedStatement(conn, query, pageId);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                Star star = new Star(rs.getString("username"), pageId);
+                stars.add(star);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PageDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return stars;
+    }
+    
+    public void createStar(Star star) {
+        String query = "INSERT INTO STARS (USERNAME, PAGE_ID) VALUES (?, ?)";
+        String username = star.getUsername();
+        String pageId = star.getPageId();
+        try (Connection conn = this.ds.getConnection();
+             PreparedStatement ps = createPreparedStatement(conn, query, username, pageId)) {
+            ps.executeUpdate(); 
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+    }
+    
+    public void removeStar(Star star) {
+        String query = "DELETE FROM STARS WHERE USERNAME = ? AND PAGE_ID = ?";
+        String username = star.getUsername();
+        String pageId = star.getPageId();
+        try (Connection conn = this.ds.getConnection();
+             PreparedStatement ps = createPreparedStatement(conn, query, username, pageId)) {
+            ps.executeUpdate(); 
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+    }
+    
+    public ArrayList<Page> findAllPages() {
+        ArrayList<Page> pages = new ArrayList();
+        String query = "SELECT * FROM PAGES";
+        try (Connection conn = this.ds.getConnection();
+             PreparedStatement ps = createPreparedStatement(conn, query);
              ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
                 Page page = new Page();
@@ -148,7 +189,7 @@ public class PageDAO extends DAO {
                 page.setName(rs.getString("page_name"));
                 page.setDescription(rs.getString("description"));
                 page.setCurrentVersion(rs.getInt("current_version"));
-                page.setAuthor(rs.getString("created_by"));
+                page.setAuthor(rs.getString("author"));
                 page.setPublished(rs.getBoolean("published"));
             }
         } catch (SQLException ex) {

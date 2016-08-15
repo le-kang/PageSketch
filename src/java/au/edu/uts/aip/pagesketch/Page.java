@@ -18,6 +18,7 @@ public class Page {
     private String author;
     private boolean published = false;
     private ArrayList<PageVersion> versions = new ArrayList();
+    private ArrayList<Star> stars = new ArrayList();
 
     /**
      * Get the id of the page. 
@@ -157,7 +158,28 @@ public class Page {
     public PageVersion getCurrentPageVersion() {
         return versions.get(0);
     }
+
+    /**
+     * 
+     * @return 
+     */
+    public ArrayList<Star> getStars() {
+        return stars;
+    }
+
+    /**
+     * 
+     * @param stars 
+     */
+    public void setStars(ArrayList<Star> stars) {
+        this.stars = stars;
+    }
     
+    /**
+     * 
+     * @param version
+     * @return 
+     */
     public PageVersion getPageVersion(int version) {
         return versions.get(versions.size() - version);
     }

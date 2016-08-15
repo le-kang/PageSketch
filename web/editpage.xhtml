@@ -9,8 +9,7 @@
     <f:metadata>
         <f:viewParam name="id" value="#{pageController.id}"/>
         <f:viewParam name="version" value="#{pageController.version}"/>
-        <f:viewAction action="#{pageController.loadPage}"/>
-        <f:viewAction action="#{pageController.setAuthor(userController.user.username)}" if="#{pageController.id == null}"/>
+        <f:viewAction action="#{pageController.loadPage(userController.user.username, 'edit')}"/>
     </f:metadata>
     <h:head>
         <title>Page Sketch</title>
