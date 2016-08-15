@@ -191,6 +191,7 @@ public class PageDAO extends DAO {
                 page.setCurrentVersion(rs.getInt("current_version"));
                 page.setAuthor(rs.getString("author"));
                 page.setPublished(rs.getBoolean("published"));
+                pages.add(page);
             }
         } catch (SQLException ex) {
             Logger.getLogger(PageDAO.class.getName()).log(Level.SEVERE, null, ex);

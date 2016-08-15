@@ -5,6 +5,9 @@
       xmlns:f="http://java.sun.com/jsf/core" 
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets" 
       xmlns:p="http://primefaces.org/ui">  
+    <f:metadata>
+        <f:viewAction action="#{homeController.loadPages(userController.user.username)}"/>
+    </f:metadata>
     <h:head>
         <title>Page Sketch</title>
         <link rel="stylesheet" type="text/css" href="style/style.css"/>
@@ -18,12 +21,39 @@
                 </div>
                 <div class="ui-g-8">
                     <p:panel header="Pages from Other Sketchers">
-
+                        <p:dataTable var="page" value="#{homeController.otherPages}">
+                            <p:column headerText="Name">
+                                <h:outputText value="#{page.name}"/>
+                            </p:column>
+                            <p:column headerText="Description">
+                                <h:outputText value="#{page.description}"/>
+                            </p:column>
+                            <p:column headerText="Author" width="100">
+                                <h:outputText value="#{page.author}"/>
+                            </p:column>
+                            <p:column headerText="Option" width="40">
+                                <p:link value="View" outcome="viewpage">
+                                    <f:param name="id" value="#{page.id}"/>
+                                </p:link>
+                            </p:column>
+                        </p:dataTable>
                     </p:panel>
                 </div>
                 <div class="ui-g-4">
                     <p:panel header="My Pages">
-
+                        <p:dataTable var="page" value="#{homeController.myPages}">
+                            <p:column headerText="Name">
+                                <h:outputText value="#{page.name}"/>
+                            </p:column>
+                            <p:column headerText="Option" width="80">
+                                <p:link value="View" outcome="viewpage" style="margin-right:10px">
+                                    <f:param name="id" value="#{page.id}"/>
+                                </p:link>
+                                <p:link value="Edit" outcome="editpage" style="margin-right:10px">
+                                    <f:param name="id" value="#{page.id}"/>
+                                </p:link>
+                            </p:column>
+                        </p:dataTable>
                     </p:panel>
                 </div>
             </div>
