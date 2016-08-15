@@ -1,4 +1,4 @@
-package au.edu.uts.aip.pagesketch;
+package au.edu.uts.aip.pagesketch.model;
 
 /**
  * This class represents a star record that a user stars a page

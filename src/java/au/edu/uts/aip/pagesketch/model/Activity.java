@@ -1,4 +1,4 @@
-package au.edu.uts.aip.pagesketch;
+package au.edu.uts.aip.pagesketch.model;
 
 import java.util.Date;
 

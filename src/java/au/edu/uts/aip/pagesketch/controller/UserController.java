@@ -1,5 +1,8 @@
-package au.edu.uts.aip.pagesketch;
+package au.edu.uts.aip.pagesketch.controller;
 
+import au.edu.uts.aip.pagesketch.dataaccess.UserDAO;
+import au.edu.uts.aip.pagesketch.model.Activity;
+import au.edu.uts.aip.pagesketch.model.User;
 import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;

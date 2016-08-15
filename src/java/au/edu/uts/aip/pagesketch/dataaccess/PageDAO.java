@@ -1,5 +1,8 @@
-package au.edu.uts.aip.pagesketch;
+package au.edu.uts.aip.pagesketch.dataaccess;
 
+import au.edu.uts.aip.pagesketch.model.Page;
+import au.edu.uts.aip.pagesketch.model.PageVersion;
+import au.edu.uts.aip.pagesketch.model.Star;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

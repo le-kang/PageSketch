@@ -1,5 +1,7 @@
-package au.edu.uts.aip.pagesketch;
+package au.edu.uts.aip.pagesketch.controller;
 
+import au.edu.uts.aip.pagesketch.dataaccess.PageDAO;
+import au.edu.uts.aip.pagesketch.model.Page;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.logging.Level;

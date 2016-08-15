@@ -1,5 +1,8 @@
-package au.edu.uts.aip.pagesketch;
+package au.edu.uts.aip.pagesketch.dataaccess;
 
+import au.edu.uts.aip.pagesketch.util.Sha;
+import au.edu.uts.aip.pagesketch.model.Activity;
+import au.edu.uts.aip.pagesketch.model.User;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

@@ -1,5 +1,9 @@
-package au.edu.uts.aip.pagesketch;
+package au.edu.uts.aip.pagesketch.controller;
 
+import au.edu.uts.aip.pagesketch.dataaccess.PageDAO;
+import au.edu.uts.aip.pagesketch.model.Page;
+import au.edu.uts.aip.pagesketch.model.PageVersion;
+import au.edu.uts.aip.pagesketch.model.Star;
 import java.io.Serializable;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
