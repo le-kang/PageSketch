@@ -10,6 +10,7 @@
                 <h:form>
                     <p:menuButton value="Welcome, #{userController.user.fullName}">
                         <p:menuitem value="Home" outcome="index"/>
+                        <p:menuitem value="Activites" outcome="activities"/>
                         <p:menuitem value="Create New Page" outcome="editpage"/>
                         <p:separator/>
                         <p:menuitem value="Logout" action="#{userController.logout}"/>

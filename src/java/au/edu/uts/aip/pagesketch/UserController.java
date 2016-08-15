@@ -2,6 +2,7 @@ package au.edu.uts.aip.pagesketch;
 
 import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.enterprise.context.*;
@@ -25,14 +26,7 @@ public class UserController implements Serializable {
     @Size(min=1, message="Please enter a password")
     private String password;
     private User user = new User();
-
-    /**
-     * 
-     * @return 
-     */
-    public User getUser() {
-        return user;
-    }
+    private ArrayList<Activity> activities = new ArrayList();
 
     /**
      * 
@@ -64,6 +58,22 @@ public class UserController implements Serializable {
      */
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    /**
+     * 
+     * @return 
+     */
+    public User getUser() {
+        return user;
+    }
+
+    /**
+     * 
+     * @return 
+     */
+    public ArrayList<Activity> getActivities() {
+        return activities;
     }
     
     /**
@@ -134,5 +144,14 @@ public class UserController implements Serializable {
             return null;
         }
         return "login?faces-redirect=true";
+    }
+    
+    public void loadActivities() {
+        try {
+            UserDAO userDAO = new UserDAO();
+            activities = userDAO.findAllActivity(user.getUsername());
+        } catch (NamingException ex) {
+            Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

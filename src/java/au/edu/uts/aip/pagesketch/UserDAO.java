@@ -68,20 +68,27 @@ public class UserDAO extends DAO{
     
     /**
      * 
+     * @param username
      * @return 
      */
-    public ArrayList<String> findAll() {
-        ArrayList<String> usernames = new ArrayList();
-        String query = "SELECT * FROM USERS";
+    public ArrayList<Activity> findAllActivity(String username) {
+        ArrayList<Activity> activities = new ArrayList();
+        String query = "SELECT * FROM USER_ACTIVITIES WHERE USERNAME = ? ORDER BY CREATED_AT DESC";
         try (Connection conn = this.ds.getConnection();
-             PreparedStatement ps = createPreparedStatement(conn, query);
+             PreparedStatement ps = createPreparedStatement(conn, query, username);
              ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
-                usernames.add(rs.getString("username"));
+                Activity activity = new Activity();
+                activity.setUsername(rs.getString("username"));
+                activity.setAction(rs.getString("user_action"));
+                activity.setPageName(rs.getString("page_name"));
+                activity.setPageId(rs.getString("page_id"));
+                activity.setCreatedAt(rs.getTimestamp("created_at"));
+                activities.add(activity);
             }
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return usernames;
+        return activities;
     }
 }

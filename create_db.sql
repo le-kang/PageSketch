@@ -3,11 +3,6 @@
  * Created: Aug 9, 2016
  */
 
-drop table stars;
-drop table page_versions;
-drop table pages;
-drop table users;
-
 -- Table for user details
 create table users (
     username varchar(30) not null primary key,
@@ -45,3 +40,10 @@ create table stars (
     created_at timestamp default current_timestamp not null,
     primary key (username, page_id)
 );
+
+-- View for users' activities summary
+create view user_activities as
+select author as username, case when page_versions.version = 1 THEN 'Created' else 'Updated' end as user_action, page_name, pages.id as page_id, created_at
+from page_versions inner join pages on page_versions.id = pages.id 
+union
+select username, 'Starred' as user_action, page_name, page_id, created_at from stars inner join pages on stars.page_id = pages.id

@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"  
+      xmlns:h="http://java.sun.com/jsf/html"  
+      xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets" 
+      xmlns:p="http://primefaces.org/ui">  
+    <f:metadata>
+        <f:viewAction action="#{userController.loadActivities()}"/>
+    </f:metadata>
+    <h:head>
+        <title>Page Sketch</title>
+        <link rel="stylesheet" type="text/css" href="style/style.css"/>
+    </h:head>
+    <h:body>
+        <ui:include src="/WEB-INF/header.xhtml"/>
+        <div class="main">
+            <div class="container">
+                <p:panel header="My Activities">
+                    <ui:repeat var="activity" value="#{userController.activities}">
+                        <p>
+                            <h:outputText value="#{activity.createdAt}" >
+                                <f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+                            </h:outputText> - 
+                            #{activity.action} page 
+                            <p:link value="#{activity.pageName}" outcome="viewpage">
+                                <f:param name="id" value="#{activity.pageId}"/>
+                            </p:link>
+                        </p>
+                    </ui:repeat>
+                </p:panel>
+            </div>
+        </div>
+        <ui:include src="/WEB-INF/footer.xhtml"/>
+    </h:body>
+</html>
+
