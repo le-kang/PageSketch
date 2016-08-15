@@ -7,16 +7,31 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 /**
- *
+ * A abstract class looks up the JDBC pool and prepare statement for reuse
+ * 
  * @author Le Kang
  */
 public abstract class DAO {
     protected final DataSource ds;
     
+    /**
+     * Look up the JDBC connection pool
+     * 
+     * @throws NamingException 
+     */
     public DAO() throws NamingException {
         this.ds = (DataSource)InitialContext.doLookup("jdbc/aip");
     }
     
+    /**
+     * Dynamical create prepared statement
+     * 
+     * @param conn
+     * @param query
+     * @param args
+     * @return
+     * @throws SQLException 
+     */
     protected PreparedStatement createPreparedStatement(Connection conn, String query, Object... args) 
             throws SQLException {
         PreparedStatement ps = conn.prepareStatement(query);

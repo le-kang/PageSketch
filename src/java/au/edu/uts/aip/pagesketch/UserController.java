@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.*;
 
 /**
+ * Backing bean for handling user login, logout, registration
+ * and list the recent activities for this user
  *
  * @author Le Kang
  */
@@ -29,6 +31,7 @@ public class UserController implements Serializable {
     private ArrayList<Activity> activities = new ArrayList();
 
     /**
+     * Get the username for login
      * 
      * @return 
      */
@@ -37,6 +40,7 @@ public class UserController implements Serializable {
     }
 
     /**
+     * Set the username for login
      * 
      * @param username 
      */
@@ -45,6 +49,7 @@ public class UserController implements Serializable {
     }
 
     /**
+     * Get the password for login
      * 
      * @return 
      */
@@ -53,6 +58,7 @@ public class UserController implements Serializable {
     }
 
     /**
+     * Set the password for login
      * 
      * @param password 
      */
@@ -61,6 +67,7 @@ public class UserController implements Serializable {
     }
 
     /**
+     * Get the user object
      * 
      * @return 
      */
@@ -69,6 +76,7 @@ public class UserController implements Serializable {
     }
 
     /**
+     * Get the user's recent activities
      * 
      * @return 
      */
@@ -77,6 +85,7 @@ public class UserController implements Serializable {
     }
     
     /**
+     * Handle login with container-managed security
      * 
      * @return 
      */
@@ -100,6 +109,7 @@ public class UserController implements Serializable {
     }
     
     /**
+     * Handle logout with container-managed security
      * 
      * @return 
      */
@@ -119,6 +129,7 @@ public class UserController implements Serializable {
     }
     
     /**
+     * Handle registration of a new user
      * 
      * @return 
      */
@@ -146,6 +157,10 @@ public class UserController implements Serializable {
         return "login?faces-redirect=true";
     }
     
+    /**
+     * Load current user's recently activities
+     * 
+     */
     public void loadActivities() {
         try {
             UserDAO userDAO = new UserDAO();

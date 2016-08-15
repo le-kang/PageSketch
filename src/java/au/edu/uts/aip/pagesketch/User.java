@@ -5,6 +5,7 @@ import java.util.Date;
 import javax.validation.constraints.*;
 
 /**
+ * This class stores basic information of a user
  *
  * @author Le Kang
  */
@@ -21,6 +22,7 @@ public class User {
     private Date createdAt;
 
     /**
+     * Get the username of the user 
      * 
      * @return 
      */
@@ -29,6 +31,7 @@ public class User {
     }
 
     /**
+     * Set the username of the user
      * 
      * @param username 
      */
@@ -37,6 +40,7 @@ public class User {
     }
 
     /**
+     * Set the password of the user
      * 
      * @return 
      */
@@ -45,6 +49,7 @@ public class User {
     }
 
     /**
+     * Get the password of the user
      * 
      * @param password 
      */
@@ -53,6 +58,7 @@ public class User {
     }
 
     /**
+     * Get the full name of the user
      * 
      * @return 
      */
@@ -61,6 +67,7 @@ public class User {
     }
 
     /**
+     * Set the full name of the user
      * 
      * @param fullName 
      */
@@ -69,6 +76,7 @@ public class User {
     }
 
     /**
+     * Get the email of the user
      * 
      * @return 
      */
@@ -77,6 +85,7 @@ public class User {
     }
 
     /**
+     * Set the email of the user
      * 
      * @param email 
      */
@@ -85,6 +94,7 @@ public class User {
     }
 
     /**
+     * Get the bio of the user
      * 
      * @return 
      */
@@ -93,6 +103,7 @@ public class User {
     }
 
     /**
+     * Set the bio of the user
      * 
      * @param bio 
      */
@@ -101,6 +112,7 @@ public class User {
     }
 
     /**
+     * Get when the user is registered
      * 
      * @return 
      */
@@ -109,6 +121,7 @@ public class User {
     }
 
     /**
+     * Set when the user is registered
      * 
      * @param createdAt 
      */

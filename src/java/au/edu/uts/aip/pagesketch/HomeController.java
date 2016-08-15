@@ -9,6 +9,8 @@ import javax.inject.Named;
 import javax.naming.NamingException;
 
 /**
+ * Backing bean for getting all the pages belong to current user and 
+ * pages from other users for share
  *
  * @author Le Kang
  */
@@ -20,6 +22,11 @@ public class HomeController implements Serializable {
     private ArrayList<Page> myPages = new ArrayList();
     private String user;
 
+    /**
+     * Load all pages and set current user in controller context
+     * 
+     * @param username 
+     */
     public void loadPages(String username) {
         user = username;
         try {
@@ -30,6 +37,11 @@ public class HomeController implements Serializable {
         }
     }
     
+    /**
+     * Find pages from other users for share
+     * 
+     * @return pages from other users for share
+     */
     public ArrayList<Page> getOtherPages() {
         for (Page page: pages) {
             if (!page.getAuthor().equals(user) && page.getPublished()) {
@@ -39,6 +51,11 @@ public class HomeController implements Serializable {
         return otherPages;
     }
     
+    /**
+     * Find pages belong to the current user
+     * 
+     * @return pages belong to the current user
+     */
     public ArrayList<Page> getMyPages() {
         for (Page page: pages) {
             if (page.getAuthor().equals(user)) {

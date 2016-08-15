@@ -1,6 +1,7 @@
 package au.edu.uts.aip.pagesketch;
 
 /**
+ * This class represents a star record that a user stars a page
  *
  * @author Le Kang
  */
@@ -10,8 +11,8 @@ public class Star {
 
     /**
      * 
-     * @param username
-     * @param pageId 
+     * @param username the username who starred the page
+     * @param pageId the page ID which is starred
      */
     public Star(String username, String pageId) {
         this.username = username;
@@ -19,14 +20,16 @@ public class Star {
     }
 
     /**
+     * Get the user who starred the page
      * 
-     * @return 
+     * @return the user who starred the page
      */
     public String getUsername() {
         return username;
     }
 
     /**
+     * Set the user who starred the page
      * 
      * @param username 
      */
@@ -35,14 +38,16 @@ public class Star {
     }
 
     /**
+     * The the page ID which is starred
      * 
-     * @return 
+     * @return the page ID which is starred
      */
     public String getPageId() {
         return pageId;
     }
 
     /**
+     * Set the page ID which is starred
      * 
      * @param pageId 
      */

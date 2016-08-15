@@ -16,14 +16,16 @@ public class PageVersion {
     private Date createdAt;
     
     /**
+     * Get the page ID
      * 
-     * @return 
+     * @return the page ID
      */
     public String getId() {
         return id;
     }
 
     /**
+     * Set the page ID
      * 
      * @param id 
      */
@@ -32,14 +34,16 @@ public class PageVersion {
     }
 
     /**
+     * Get the version number of this version
      * 
-     * @return 
+     * @return version number
      */
     public int getVersion() {
         return version;
     }
 
     /**
+     * Set the version number 
      * 
      * @param version 
      */
@@ -48,6 +52,7 @@ public class PageVersion {
     }
 
     /**
+     * Get the code in this version
      * 
      * @return 
      */
@@ -56,6 +61,7 @@ public class PageVersion {
     }
 
     /**
+     * Set the code for this version
      * 
      * @param code 
      */
@@ -64,14 +70,16 @@ public class PageVersion {
     }
 
     /**
+     * Get when this version is created
      * 
-     * @return 
+     * @return the time when this version is created
      */
     public Date getCreatedAt() {
         return createdAt;
     }
 
     /**
+     * Set when this version is created
      * 
      * @param createdAt 
      */

@@ -102,7 +102,7 @@ public class Page {
      * <p>
      * The user must be registered in user table
      * 
-     * @return 
+     * @return the user who created this page
      */
     public String getAuthor() {
         return author;
@@ -120,7 +120,7 @@ public class Page {
     /**
      * Get the flag whether the user published the page for share
      * 
-     * @return 
+     * @return the flag whether the user published the page for share
      */
     public boolean getPublished() {
         return published;
@@ -136,14 +136,16 @@ public class Page {
     }
 
     /**
+     * Get all versions for the page
      * 
-     * @return 
+     * @return all versions in ArrayList of the page
      */
     public ArrayList<PageVersion> getVersions() {
         return versions;
     }
 
     /**
+     * Store all versions in page object
      * 
      * @param versions 
      */
@@ -152,22 +154,25 @@ public class Page {
     }
     
     /**
+     * Get the current version object of the page
      * 
-     * @return 
+     * @return the current version object of the page 
      */
     public PageVersion getCurrentPageVersion() {
         return versions.get(0);
     }
 
     /**
+     * Get the stars objects in ArrayList
      * 
-     * @return 
+     * @return all the stars objects in ArrayList
      */
     public ArrayList<Star> getStars() {
         return stars;
     }
 
     /**
+     * Store stars in page object
      * 
      * @param stars 
      */
@@ -176,8 +181,9 @@ public class Page {
     }
     
     /**
+     * Retrieve a specific version by version number
      * 
-     * @param version
+     * @param version a specific version number
      * @return 
      */
     public PageVersion getPageVersion(int version) {

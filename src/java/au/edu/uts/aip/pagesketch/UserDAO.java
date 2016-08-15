@@ -11,7 +11,9 @@ import java.util.logging.Logger;
 import javax.naming.NamingException;
 
 /**
- *
+ * Data access object class for CRUD operation
+ * Involved Class: User, Activity
+ * 
  * @author Le Kang
  */
 public class UserDAO extends DAO{
@@ -20,6 +22,7 @@ public class UserDAO extends DAO{
     }
     
     /**
+     * Create a new user with encrypted passwords
      * 
      * @param user
      * @throws NoSuchAlgorithmException
@@ -42,6 +45,7 @@ public class UserDAO extends DAO{
     }
     
     /**
+     * Find a user by username
      * 
      * @param username
      * @return 
@@ -67,6 +71,7 @@ public class UserDAO extends DAO{
     }
     
     /**
+     * Find all user's activities by username
      * 
      * @param username
      * @return 

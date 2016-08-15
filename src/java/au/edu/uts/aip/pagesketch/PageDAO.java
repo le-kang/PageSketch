@@ -10,14 +10,25 @@ import java.util.logging.Logger;
 import javax.naming.NamingException;
 
 /**
- *
+ * Data access object class for CRUD operation
+ * Involved Class: Page, PageVersion, Star
+ * 
  * @author Le Kang
  */
 public class PageDAO extends DAO {
+    /**
+     * 
+     * @throws NamingException 
+     */
     public PageDAO() throws NamingException {
         super();
     }
     
+    /**
+     * Insert a new page
+     * 
+     * @param page 
+     */
     public void create(Page page) {
         String query = "INSERT INTO PAGES "
                 + "(ID, PAGE_NAME, DESCRIPTION, CURRENT_VERSION, AUTHOR, PUBLISHED) VALUES "
@@ -35,6 +46,11 @@ public class PageDAO extends DAO {
         } 
     }
     
+    /**
+     * Insert a new page version after a page is created
+     * @param id
+     * @param pageVersion 
+     */
     public void createNewVersion(String id, PageVersion pageVersion) {
         String query = "INSERT INTO PAGE_VERSIONS "
                 + "(ID, VERSION, CODE) VALUES "
@@ -49,6 +65,11 @@ public class PageDAO extends DAO {
         } 
     }
     
+    /**
+     * Update page with new name, description, current_version and whether publish for share
+     * 
+     * @param page 
+     */
     public void update(Page page) {
         String query = "UPDATE PAGES "
                 + "SET PAGE_NAME = ?, DESCRIPTION = ?, CURRENT_VERSION = ?, PUBLISHED = ? "
@@ -66,6 +87,12 @@ public class PageDAO extends DAO {
         } 
     }
     
+    /**
+     * Get page object by page ID
+     * 
+     * @param id
+     * @return page object
+     */
     public Page find(String id) {
         String query = "SELECT * FROM PAGES WHERE ID = ?";
         try (Connection conn = this.ds.getConnection();
@@ -89,6 +116,13 @@ public class PageDAO extends DAO {
         return null;
     }
     
+    /**
+     * Check whether the name is used on current account before creating a new page
+     * 
+     * @param name
+     * @param author
+     * @return 
+     */
     public boolean found(String name, String author) {
         String query = "SELECT * FROM PAGES WHERE PAGE_NAME = ? AND AUTHOR = ?";
         try (Connection conn = this.ds.getConnection();
@@ -103,6 +137,15 @@ public class PageDAO extends DAO {
         return false;
     }
     
+    /**
+     * Check whether the name is used on current account before updating a existing page
+     * with new nameß
+     * 
+     * @param id
+     * @param name
+     * @param author
+     * @return 
+     */
     public boolean found(String id, String name, String author) {
         String query = "SELECT * FROM PAGES WHERE PAGE_NAME = ? AND AUTHOR = ? AND ID != ?";
         try (Connection conn = this.ds.getConnection();
@@ -117,6 +160,12 @@ public class PageDAO extends DAO {
         return false;
     }
     
+    /**
+     * Find all page versions by page ID
+     * 
+     * @param id
+     * @return 
+     */
     public ArrayList<PageVersion> findPageVersions(String id) {
         ArrayList<PageVersion> versions = new ArrayList();
         String query = "SELECT * FROM PAGE_VERSIONS WHERE ID = ? ORDER BY VERSION DESC";
@@ -137,6 +186,12 @@ public class PageDAO extends DAO {
         return versions;
     }
     
+    /**
+     * Find all stars by page ID
+     * 
+     * @param pageId
+     * @return 
+     */
     public ArrayList<Star> findStars(String pageId) {
         ArrayList<Star> stars = new ArrayList();
         String query = "SELECT * FROM STARS WHERE PAGE_ID = ?";
@@ -153,6 +208,11 @@ public class PageDAO extends DAO {
         return stars;
     }
     
+    /**
+     * Add a star record for the page
+     * 
+     * @param star 
+     */
     public void createStar(Star star) {
         String query = "INSERT INTO STARS (USERNAME, PAGE_ID) VALUES (?, ?)";
         String username = star.getUsername();
@@ -165,6 +225,11 @@ public class PageDAO extends DAO {
         } 
     }
     
+    /**
+     * Delete a star record for the page
+     * 
+     * @param star 
+     */
     public void removeStar(Star star) {
         String query = "DELETE FROM STARS WHERE USERNAME = ? AND PAGE_ID = ?";
         String username = star.getUsername();
@@ -177,6 +242,11 @@ public class PageDAO extends DAO {
         } 
     }
     
+    /**
+     * Find all pages created by any user
+     * 
+     * @return 
+     */
     public ArrayList<Page> findAllPages() {
         ArrayList<Page> pages = new ArrayList();
         String query = "SELECT * FROM PAGES";
